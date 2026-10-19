@@ -1,24 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const GameCanvas = lazy(() => import("@/components/game/GameCanvas"));
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  ssr: false,
+  head: () => ({
+    meta: [
+      { title: "Real Football Simulator 3D — Training Ground" },
+      { name: "description", content: "Browser 3D football prototype: stadium, physics ball and a controllable player with touch and keyboard controls." },
+      { property: "og:title", content: "Real Football Simulator 3D" },
+      { property: "og:description", content: "Run a player around a floodlit 3D stadium and push a physics ball." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: () => (
+    <Suspense fallback={<div className="overlay"><p className="eyebrow">Loading stadium…</p></div>}>
+      <GameCanvas />
+    </Suspense>
+  ),
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
