@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Game state lives in src/game/store.ts (tiny external store + mutable telemetry/input); per-frame data never goes through React state, to keep 60fps on phones.
+- All tunable dimensions/feel constants live in src/game/constants.ts; stadium architecture is in src/components/game/Stadium.tsx so it can be retuned from a reference photo.
+- The 3D game is lazy-loaded on an ssr:false route because Three/Rapier are browser-only.
