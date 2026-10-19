@@ -169,7 +169,7 @@ function Stand({ length, offset, rotY }: { length: number; offset: number; rotY:
           return (
             <mesh key={i} position={[0, hgt / 2, i * tierDepth + tierDepth / 2]} receiveShadow castShadow={i % 3 === 0}>
               <boxGeometry args={[length + i * 2 * tierDepth, hgt, tierDepth]} />
-              <meshStandardMaterial color={seatColors[Math.floor(i / 5) % seatColors.length]} roughness={0.85} />
+              <meshStandardMaterial color={seatColors[Math.floor(i / 5) % seatColors.length] ?? "#888"} roughness={0.85} />
             </mesh>
           );
         })}
